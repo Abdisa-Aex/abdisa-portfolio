@@ -1,26 +1,184 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-brand-blue: #1a66ff;
+  --color-brand-dark: #030611;
+  --color-card-bg: #0a1128;
+  --font-sans: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #030611;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(90deg, #00d2ff 0%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glowing Rings for Hero */
+.hero-ring-1 {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 180, 255, 0.4);
+  box-shadow:
+    inset 0 0 50px rgba(0, 180, 255, 0.1),
+    0 0 40px rgba(0, 180, 255, 0.1);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-ring-2 {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Vertical Bridge for About Card */
+.bridge-line {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 58%;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, #00d2ff, transparent);
+  box-shadow: 0 0 10px #00d2ff;
+  z-index: 0;
+}
+/* ===== ANIMATED ROTATING BORDER ===== */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-ring {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.futuristic-card {
+  position: relative;
+  border-radius: 1rem;
+  isolation: isolate;
+}
+
+.futuristic-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 1rem;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0%,
+    #00d2ff 25%,
+    #a855f7 50%,
+    transparent 75%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: spin-ring 6s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.futuristic-card::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 1rem;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0%,
+    rgba(0, 210, 255, 0.6) 25%,
+    rgba(168, 85, 247, 0.6) 50%,
+    transparent 75%
+  );
+  filter: blur(14px);
+  opacity: 0.5;
+  animation: spin-ring 6s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ===== 3D TILT ON HOVER ===== */
+.tilt-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.tilt-3d:hover {
+  transform: perspective(1000px) rotateX(3deg) rotateY(-3deg) translateY(-6px);
+}
+
+/* ===== FLOATING PARTICLES ===== */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: 1;
+  }
+}
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #00d2ff;
+  box-shadow: 0 0 8px #00d2ff;
+  animation: float-y 4s ease-in-out infinite;
+  pointer-events: none;
+}
+.particle.p1 {
+  top: 10%;
+  left: 8%;
+  animation-delay: 0s;
+}
+.particle.p2 {
+  top: 60%;
+  left: 92%;
+  animation-delay: 1s;
+  background: #a855f7;
+  box-shadow: 0 0 8px #a855f7;
+}
+.particle.p3 {
+  top: 80%;
+  left: 15%;
+  animation-delay: 2s;
+}
+.particle.p4 {
+  top: 20%;
+  left: 85%;
+  animation-delay: 3s;
+  background: #a855f7;
+  box-shadow: 0 0 8px #a855f7;
+}
+
+/* Profile Image Mask */
+.profile-image-mask {
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
