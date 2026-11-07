@@ -39,7 +39,7 @@ import {
   SiTailwindcss,
 } from "react-icons/si";
 
-const iconMap = {
+const iconMap: Record<string, { icon: any; color: string }> = {
   HTML5: { icon: <SiHtml5 />, color: "text-[#E34F26]" },
   CSS3: { icon: <SiCss />, color: "text-[#1572B6]" },
   JavaScript: { icon: <SiJavascript />, color: "text-[#F7DF1E]" },
@@ -139,7 +139,7 @@ const cardVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 100, damping: 15 },
+    transition: { type: "spring" as const, stiffness: 100, damping: 15 },
   },
 };
 
